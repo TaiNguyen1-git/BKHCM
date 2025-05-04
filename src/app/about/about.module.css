@@ -1,0 +1,314 @@
+/* About Page Styles */
+.aboutContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: #000000;
+}
+
+/* Custom Menu Styles - Same as services page for consistency */
+.aboutHeader {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoText h1 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #000000;
+}
+
+.logoText p {
+  font-size: 0.75rem;
+  margin: 0;
+  color: #000000;
+}
+
+.desktopMenu {
+  display: none;
+}
+
+.menuButton {
+  background: transparent;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.menuButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.mobileMenu {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.menuItem {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.menuLink {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.menuLink:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+/* About Section Styles */
+.aboutSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #3b82f6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  border-radius: 2px;
+}
+
+.introText {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #4b5563;
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mission Vision Section */
+.missionVisionSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.missionCard, .visionCard {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.missionCard:hover, .visionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cardIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.cardText {
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+/* Team Section */
+.teamSection {
+  margin-top: 4rem;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.teamCard {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+.teamCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+}
+
+.memberImage {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.memberInfo {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.memberName {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+
+.memberRole {
+  color: #3b82f6;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.memberBio {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Contact Section */
+.contactSection {
+  margin-top: 4rem;
+  background-color: #f3f4f6;
+  padding: 3rem;
+  border-radius: 1rem;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.contactIcon {
+  width: 2rem;
+  height: 2rem;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.contactText {
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.contactText strong {
+  color: #1e3a8a;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .desktopMenu {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .menuButton {
+    display: none;
+  }
+  
+  .missionVisionSection {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .contactGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

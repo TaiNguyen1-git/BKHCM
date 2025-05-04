@@ -1,8 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Project
+
+A well-structured Next.js project with TypeScript, Tailwind CSS, and ESLint.
+
+## Project Structure
+
+```
+nextjs-project/
+├── public/              # Static assets
+├── src/
+│   ├── app/             # App Router pages
+│   │   ├── api/         # API routes
+│   │   └── ...          # Route groups and pages
+│   ├── assets/          # Assets that are imported into your components
+│   ├── components/      # UI components
+│   │   ├── Button/      # Component folders
+│   │   ├── ... 
+│   │   └── index.ts     # Barrel exports
+│   ├── context/         # React context providers
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Libraries and utilities
+│   ├── services/        # Service integrations and API functions
+│   ├── styles/          # Global stylesheets
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Utility functions
+├── .gitignore
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── tsconfig.json
+```
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -10,13 +51,28 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+
+- **Next.js 14** - The React framework for production
+- **TypeScript** - Strongly typed JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **ESLint** - Code linting
+- **App Router** - New file-system based router
+- **Organized Structure** - Well-organized directory structure
+
+## Best Practices
+
+- Use the App Router for routing
+- Create components in the `components` directory
+- Create hooks in the `hooks` directory
+- Create utility functions in the `utils` directory
+- Use contexts for global state
+- Create API services in the `services` directory
+- Define TypeScript types in the `types` directory
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
