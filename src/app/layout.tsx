@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -28,7 +29,9 @@ export default function RootLayout({
       </head>
       <body className={`${roboto.variable} font-sans antialiased bg-gray-100`}>
         <ThemeProvider>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
