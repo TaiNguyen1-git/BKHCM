@@ -119,6 +119,30 @@ export default function UserDashboard() {
                     </svg>
                     Trang chủ
                   </Link>
+                  <Link href="/booking" className={styles.quickLink}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.iconSmall} ${styles.quickLinkIcon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Đặt phòng
+                  </Link>
+                  <Link href="/equipment" className={styles.quickLink}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.iconSmall} ${styles.quickLinkIcon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                    Mượn thiết bị
+                  </Link>
+                  <Link href="/history" className={styles.quickLink}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.iconSmall} ${styles.quickLinkIcon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Lịch sử
+                  </Link>
+                  <Link href="/feedback" className={styles.quickLink}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.iconSmall} ${styles.quickLinkIcon}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                    Góp ý
+                  </Link>
                   <button
                     onClick={() => {
                       logout();
@@ -169,12 +193,12 @@ export default function UserDashboard() {
               </div>
               <h4 className={styles.serviceTitle}>Đặt chỗ</h4>
               <p className={styles.serviceDescription}>Đặt phòng học, phòng làm việc nhóm hoặc không gian học tập</p>
-              <button className={`${styles.serviceButton} ${styles.blue}`}>
+              <Link href="/booking" className={`${styles.serviceButton} ${styles.blue}`}>
                 <span>Đặt ngay</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
 
             {/* Mượn thiết bị */}
@@ -186,12 +210,12 @@ export default function UserDashboard() {
               </div>
               <h4 className={styles.serviceTitle}>Mượn thiết bị</h4>
               <p className={styles.serviceDescription}>Mượn các thiết bị học tập, nghiên cứu như máy tính, máy chiếu</p>
-              <button className={`${styles.serviceButton} ${styles.green}`}>
+              <Link href="/equipment" className={`${styles.serviceButton} ${styles.green}`}>
                 <span>Mượn ngay</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
 
             {/* Lịch sử đặt phòng */}
@@ -203,12 +227,12 @@ export default function UserDashboard() {
               </div>
               <h4 className={styles.serviceTitle}>Lịch sử đặt phòng</h4>
               <p className={styles.serviceDescription}>Xem lại lịch sử đặt phòng, mượn thiết bị và quản lý đặt chỗ</p>
-              <button className={`${styles.serviceButton} ${styles.purple}`}>
+              <Link href="/history" className={`${styles.serviceButton} ${styles.purple}`}>
                 <span>Xem lịch sử</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
 
             {/* Gửi ý kiến */}
@@ -220,12 +244,12 @@ export default function UserDashboard() {
               </div>
               <h4 className={styles.serviceTitle}>Gửi ý kiến</h4>
               <p className={styles.serviceDescription}>Gửi phản hồi, góp ý hoặc báo cáo sự cố để cải thiện dịch vụ</p>
-              <button className={`${styles.serviceButton} ${styles.orange}`}>
+              <Link href="/feedback" className={`${styles.serviceButton} ${styles.orange}`}>
                 <span>Gửi ý kiến</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
 
