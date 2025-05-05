@@ -21,7 +21,14 @@ export default function Login() {
   // Redirect if already logged in
   useEffect(() => {
     if (user && !isLoading) {
-      router.push('/dashboard');
+      console.log('Người dùng đã đăng nhập, chuyển hướng dựa trên vai trò:', user);
+
+      // Chuyển hướng dựa trên vai trò
+      if (user.role === 'Quản trị viên' || user.role === 'Ban quản lý') {
+        router.push('/admin');
+      } else {
+        router.push('/user');
+      }
     }
   }, [user, isLoading, router]);
 
@@ -37,12 +44,20 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      const success = await login(username, password);
+      const loggedInUser = await login(username, password);
 
-      if (success) {
-        // Chuyển hướng đến trang user
-        console.log('Đăng nhập thành công, đang chuyển hướng...');
-        window.location.replace('/user');
+      if (loggedInUser) {
+        // Kiểm tra vai trò của người dùng để chuyển hướng phù hợp
+        console.log('Đăng nhập thành công, đang chuyển hướng...', loggedInUser);
+
+        // Nếu là admin hoặc ban quản lý thì chuyển hướng đến trang admin, ngược lại chuyển đến trang user
+        if (loggedInUser.role === 'Quản trị viên' || loggedInUser.role === 'Ban quản lý') {
+          console.log('Chuyển hướng đến trang admin...');
+          router.push('/admin');
+        } else {
+          console.log('Chuyển hướng đến trang user...');
+          router.push('/user');
+        }
       } else {
         setError('Tên đăng nhập hoặc mật khẩu không đúng');
       }

@@ -7,7 +7,7 @@ export const mockUsers = [
     name: 'Nguyễn Văn A',
     role: 'Sinh viên',
     email: 'student@hcmut.edu.vn',
-    avatar: null 
+    avatar: null
   },
   {
     id: 'GV2021000456',
@@ -25,6 +25,15 @@ export const mockUsers = [
     name: 'Lê Văn C',
     role: 'Quản trị viên',
     email: 'admin@hcmut.edu.vn',
+    avatar: null
+  },
+  {
+    id: 'BQL2021000101',
+    username: 'manager',
+    password: 'password',
+    name: 'Phạm Thị D',
+    role: 'Ban quản lý',
+    email: 'manager@hcmut.edu.vn',
     avatar: null
   }
 ];

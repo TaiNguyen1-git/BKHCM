@@ -16,9 +16,11 @@ type User = {
 // Define the AuthContext type
 type AuthContextType = {
   user: User | null;
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<User | null>;
   logout: () => void;
   isLoading: boolean;
+  updateUserProfile: (updatedUser: User) => void;
+  changePassword: (userId: string, currentPassword: string, newPassword: string) => boolean;
 };
 
 // Create the AuthContext
@@ -34,12 +36,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+
+      // Đảm bảo cookie auth-token được thiết lập
+      if (!document.cookie.includes('auth-token=')) {
+        document.cookie = "auth-token=true; path=/; max-age=86400"; // Hết hạn sau 1 ngày
+      }
     }
     setIsLoading(false);
   }, []);
 
   // Login function
-  const login = async (username: string, password: string): Promise<boolean> => {
+  const login = async (username: string, password: string): Promise<User | null> => {
     setIsLoading(true);
 
     // Simulate API call delay
@@ -53,25 +60,74 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (foundUser) {
       // Remove password from user object before storing
       const { password, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword as User);
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+      const userData = userWithoutPassword as User;
+
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      // Thêm cookie để middleware có thể xác thực
+      document.cookie = "auth-token=true; path=/; max-age=86400"; // Hết hạn sau 1 ngày
+
       setIsLoading(false);
-      return true;
+      return userData;
     }
 
     setIsLoading(false);
-    return false;
+    return null;
   };
 
   // Logout function
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+
+    // Xóa cookie auth-token
+    document.cookie = "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
     window.location.replace('/login');
   };
 
+  // Update user profile function
+  const updateUserProfile = (updatedUser: User) => {
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+
+    // Update user in mockUsers for persistence
+    const userIndex = mockUsers.findIndex(u => u.id === updatedUser.id);
+    if (userIndex !== -1) {
+      // Preserve the password
+      const password = mockUsers[userIndex].password;
+      mockUsers[userIndex] = { ...updatedUser, password };
+    }
+  };
+
+  // Change password function
+  const changePassword = (userId: string, currentPassword: string, newPassword: string): boolean => {
+    const userIndex = mockUsers.findIndex(u => u.id === userId);
+
+    if (userIndex === -1) {
+      return false;
+    }
+
+    // Verify current password
+    if (mockUsers[userIndex].password !== currentPassword) {
+      return false;
+    }
+
+    // Update password
+    mockUsers[userIndex].password = newPassword;
+    return true;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{
+      user,
+      login,
+      logout,
+      isLoading,
+      updateUserProfile,
+      changePassword
+    }}>
       {children}
     </AuthContext.Provider>
   );

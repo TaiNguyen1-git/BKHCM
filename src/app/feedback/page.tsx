@@ -2,49 +2,39 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useFeedback, feedbackTypes } from '../context/FeedbackContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './feedback.module.css';
 
-// Dữ liệu mẫu cho các loại phản hồi
-const feedbackTypes = [
-  {
-    id: 'general',
-    label: 'Góp ý chung',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'bug',
-    label: 'Báo lỗi',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'feature',
-    label: 'Đề xuất tính năng',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    ),
-  },
-  {
-    id: 'improvement',
-    label: 'Cải thiện hệ thống',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-  },
-];
+// Thêm icon cho các loại phản hồi
+const feedbackTypeIcons = {
+  'general': (
+    <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+  ),
+  'bug': (
+    <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+  ),
+  'feature': (
+    <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
+  ),
+  'complaint': (
+    <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  'question': (
+    <svg xmlns="http://www.w3.org/2000/svg" className={styles.feedbackTypeIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+};
 
 export default function FeedbackPage() {
   const { user, logout, isLoading } = useAuth();
@@ -77,27 +67,36 @@ export default function FeedbackPage() {
     };
   }, [showProfileDropdown]);
 
+  // Import useFeedback hook
+  const { addFeedback } = useFeedback();
+
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // In a real application, this would send a request to the API
-    console.log('Submitting feedback:', {
+
+    if (!user) return;
+
+    // Add feedback to context
+    addFeedback({
+      userId: user.id,
+      userName: user.name,
+      userRole: user.role,
+      userEmail: user.email,
       type: feedbackType,
       subject: subject,
       message: message,
       rating: rating
     });
-    
+
     // Show success message
     setShowSuccess(true);
-    
+
     // Reset form
     setFeedbackType('general');
     setSubject('');
     setMessage('');
     setRating(0);
-    
+
     // Scroll to top to show success message
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -152,15 +151,15 @@ export default function FeedbackPage() {
             </div>
           </div>
           <div className={styles.userInfo}>
-            <div 
-              className={styles.userProfileIcon} 
+            <div
+              className={styles.userProfileIcon}
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconMedium} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            
+
             {/* User Profile Dropdown */}
             <div className={`${styles.userProfileDropdown} ${showProfileDropdown ? styles.show : ''}`}>
               <div className={styles.profileDropdownHeader}>
@@ -291,7 +290,7 @@ export default function FeedbackPage() {
                     className={`${styles.feedbackType} ${feedbackType === type.id ? styles.active : ''}`}
                     onClick={() => setFeedbackType(type.id)}
                   >
-                    {type.icon}
+                    {feedbackTypeIcons[type.id as keyof typeof feedbackTypeIcons]}
                     <span className={styles.feedbackTypeLabel}>{type.label}</span>
                   </div>
                 ))}

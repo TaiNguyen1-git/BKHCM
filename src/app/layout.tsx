@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
+import { UserProvider } from "./context/UserContext";
+import { RoomProvider } from "./context/RoomContext";
+import { BookingProvider } from "./context/BookingContext";
+import { DeviceProvider } from "./context/DeviceContext";
+import { ReportProvider } from "./context/ReportContext";
+import { FeedbackProvider } from "./context/FeedbackContext";
+import { NotificationProvider } from "./context/NotificationContext";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -30,7 +37,21 @@ export default function RootLayout({
       <body className={`${roboto.variable} font-sans antialiased bg-gray-100`}>
         <ThemeProvider>
           <AuthProvider>
-            {children}
+            <UserProvider>
+              <RoomProvider>
+                <BookingProvider>
+                  <DeviceProvider>
+                    <ReportProvider>
+                      <FeedbackProvider>
+                        <NotificationProvider>
+                          {children}
+                        </NotificationProvider>
+                      </FeedbackProvider>
+                    </ReportProvider>
+                  </DeviceProvider>
+                </BookingProvider>
+              </RoomProvider>
+            </UserProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

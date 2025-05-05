@@ -1,0 +1,404 @@
+.notificationDetailContainer {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.header {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoText {
+  margin-left: 1rem;
+}
+
+.logoText h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+}
+
+.logoText p {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.userInfo {
+  position: relative;
+}
+
+.userProfileIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.userProfileIcon:hover {
+  background-color: #f3f4f6;
+}
+
+.userName {
+  margin: 0 0.5rem;
+  font-weight: 500;
+}
+
+.iconMedium {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.iconSmall {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.profileDropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 20rem;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.profileInfo {
+  display: flex;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.profileAvatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.avatarPlaceholder {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.profileDetails {
+  flex: 1;
+}
+
+.profileName {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #1f2937;
+}
+
+.profileRole {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0 0 0.25rem 0;
+}
+
+.profileEmail {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.profileLinks {
+  padding: 0.5rem;
+}
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  color: #4b5563;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.profileLink:hover {
+  background-color: #f3f4f6;
+}
+
+.profileLink svg {
+  margin-right: 0.75rem;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+}
+
+.logoutButton:hover {
+  background-color: #fef2f2;
+}
+
+.logoutButton svg {
+  margin-right: 0.75rem;
+}
+
+.mainContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.breadcrumbLink {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumbLink:hover {
+  color: #4b5563;
+  text-decoration: underline;
+}
+
+.breadcrumbSeparator {
+  margin: 0 0.5rem;
+}
+
+.breadcrumbCurrent {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.pageActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.backButton,
+.deleteButton {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backButton {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.backButton:hover {
+  background-color: #e5e7eb;
+}
+
+.deleteButton {
+  background-color: #fee2e2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.deleteButton:hover {
+  background-color: #fecaca;
+}
+
+.backButton svg,
+.deleteButton svg {
+  margin-right: 0.5rem;
+}
+
+.notificationCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.notificationHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notificationTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.notificationMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.senderInfo,
+.timeInfo {
+  display: flex;
+  align-items: center;
+}
+
+.senderLabel,
+.timeLabel {
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.senderName,
+.timeValue {
+  color: #4b5563;
+}
+
+.notificationContent {
+  margin-bottom: 2rem;
+}
+
+.notificationMessage {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  white-space: pre-line;
+}
+
+.notificationActions {
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.viewFeedbackButton {
+  display: inline-flex;
+  align-items: center;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.viewFeedbackButton:hover {
+  background-color: #2563eb;
+}
+
+.viewFeedbackButton svg {
+  margin-right: 0.5rem;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loadingSpinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .headerContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .userInfo {
+    margin-top: 1rem;
+    align-self: flex-end;
+  }
+  
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .pageActions {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+  .backButton,
+  .deleteButton {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .notificationMeta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
