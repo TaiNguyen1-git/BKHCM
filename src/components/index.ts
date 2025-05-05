@@ -1,4 +1,3 @@
 export * from './Button';
-export * from './ThemeToggle'; 
-export * from './LoginModal';
+export * from './ThemeToggle';
 

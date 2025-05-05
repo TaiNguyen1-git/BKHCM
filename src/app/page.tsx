@@ -1,12 +1,71 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Room } from './context/RoomContext';
 
 export default function Home() {
   const featuresRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [rooms, setRooms] = useState<Room[]>([]);
+
+  // Lấy dữ liệu phòng học từ localStorage hoặc dữ liệu mẫu
+  useEffect(() => {
+    const storedRooms = localStorage.getItem('rooms');
+    if (storedRooms) {
+      setRooms(JSON.parse(storedRooms));
+    } else {
+      // Dữ liệu mẫu nếu không có trong localStorage
+      const initialRoomsData: Room[] = [
+        {
+          id: 1,
+          name: 'Phòng học H1.101',
+          capacity: 40,
+          building: 'H1',
+          floor: 1,
+          type: 'Phòng học',
+          status: 'available',
+          equipment: ['Máy chiếu', 'Bảng trắng', 'Điều hòa', 'Micro'],
+          availableTimeSlots: ['07:00 - 09:00', '09:00 - 11:00', '13:00 - 15:00', '15:00 - 17:00'],
+        },
+        {
+          id: 2,
+          name: 'Phòng thực hành H3.201',
+          capacity: 30,
+          building: 'H3',
+          floor: 2,
+          type: 'Phòng thực hành',
+          status: 'available',
+          equipment: ['Máy tính (30)', 'Máy chiếu', 'Bảng trắng', 'Điều hòa'],
+          availableTimeSlots: ['07:00 - 09:00', '13:00 - 15:00', '15:00 - 17:00'],
+        },
+        {
+          id: 3,
+          name: 'Phòng họp H6.302',
+          capacity: 15,
+          building: 'H6',
+          floor: 3,
+          type: 'Phòng họp',
+          status: 'available',
+          equipment: ['Máy chiếu', 'Bảng trắng', 'Điều hòa', 'Bàn họp'],
+          availableTimeSlots: ['09:00 - 11:00', '13:00 - 15:00', '17:00 - 19:00'],
+        },
+        {
+          id: 4,
+          name: 'Phòng seminar B4.203',
+          capacity: 50,
+          building: 'B4',
+          floor: 2,
+          type: 'Phòng seminar',
+          status: 'available',
+          equipment: ['Máy chiếu', 'Bảng trắng', 'Điều hòa', 'Micro', 'Loa'],
+          availableTimeSlots: ['07:00 - 09:00', '09:00 - 11:00', '15:00 - 17:00'],
+        }
+      ];
+      setRooms(initialRoomsData);
+    }
+  }, []);
 
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -54,7 +113,6 @@ export default function Home() {
                   <li className="menu-divider"></li>
                   <li className="menu-auth-links">
                     <Link href="/login" onClick={toggleMenu} className="menu-auth-button login">Đăng nhập</Link>
-                    <Link href="/register" onClick={toggleMenu} className="menu-auth-button register">Đăng ký</Link>
                   </li>
                 </ul>
               </nav>
@@ -135,74 +193,26 @@ export default function Home() {
           </p>
 
           <div className="rooms-grid">
-            {/* Room A */}
-            <div className="room-container">
-              <div className="room-header">
-                <h3 className="room-title">Phòng học A</h3>
+            {rooms.slice(0, 4).map((room) => (
+              <div key={room.id} className="room-container">
+                <div className="room-header">
+                  <h3 className="room-title">{room.name}</h3>
+                </div>
+                <p className="room-capacity">Sức chứa: {room.capacity} người</p>
+                <div className="room-features">
+                  {room.equipment.slice(0, 3).map((equipment, index) => (
+                    <span key={index} className="room-feature">{equipment}</span>
+                  ))}
+                  {room.equipment.length > 3 && (
+                    <span className="room-feature">+{room.equipment.length - 3}</span>
+                  )}
+                </div>
+                <div className="room-status">
+                  <span className="status-available">Có sẵn</span>
+                  <Link href="/login" className="btn-book">Đặt ngay</Link>
+                </div>
               </div>
-              <p className="room-capacity">Sức chứa: 20 người</p>
-              <div className="room-features">
-                <span className="room-feature">Máy chiếu</span>
-                <span className="room-feature">Điều hòa</span>
-                <span className="room-feature">Wifi</span>
-              </div>
-              <div className="room-status">
-                <span className="status-available">Có sẵn</span>
-                <Link href="/login" className="btn-book">Đặt ngay</Link>
-              </div>
-            </div>
-
-            {/* Room B */}
-            <div className="room-container">
-              <div className="room-header">
-                <h3 className="room-title">Phòng học B</h3>
-              </div>
-              <p className="room-capacity">Sức chứa: 25 người</p>
-              <div className="room-features">
-                <span className="room-feature">Máy chiếu</span>
-                <span className="room-feature">Điều hòa</span>
-                <span className="room-feature">Wifi</span>
-              </div>
-              <div className="room-status">
-                <span className="status-available">Có sẵn</span>
-                <Link href="/login" className="btn-book">Đặt ngay</Link>
-              </div>
-            </div>
-
-            {/* Room C */}
-            <div className="room-container">
-              <div className="room-header">
-                <h3 className="room-title">Phòng học C</h3>
-              </div>
-              <p className="room-capacity">Sức chứa: 30 người</p>
-              <div className="room-features">
-                <span className="room-feature">Máy chiếu</span>
-                <span className="room-feature">Điều hòa</span>
-                <span className="room-feature">Wifi</span>
-                <span className="room-feature">Bảng tương tác</span>
-              </div>
-              <div className="room-status">
-                <span className="status-available">Có sẵn</span>
-                <Link href="/login" className="btn-book">Đặt ngay</Link>
-              </div>
-            </div>
-
-            {/* Room D */}
-            <div className="room-container">
-              <div className="room-header">
-                <h3 className="room-title">Phòng nghiên cứu</h3>
-              </div>
-              <p className="room-capacity">Sức chứa: 10 người</p>
-              <div className="room-features">
-                <span className="room-feature">Máy tính</span>
-                <span className="room-feature">Điều hòa</span>
-                <span className="room-feature">Wifi tốc độ cao</span>
-              </div>
-              <div className="room-status">
-                <span className="status-available">Có sẵn</span>
-                <Link href="/login" className="btn-book">Đặt ngay</Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

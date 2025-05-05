@@ -1,153 +1,7 @@
 /* User Dashboard Styles */
-.dashboardContainer {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff; /* White background */
-  color: #1e293b; /* Dark text for contrast */
-}
-
-/* Loading Styles */
-.loadingContainer {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-}
-
-.loadingContent {
-  text-align: center;
-}
-
-.loadingSpinner {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 0.25rem solid rgba(59, 130, 246, 0.1);
-  border-top-color: #3b82f6;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 1rem auto;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Login Prompt Styles */
-.loginPromptContainer {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-}
-
-.loginPromptContent {
-  text-align: center;
-  color: #1e293b;
-}
-
-.loginButton {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 0.375rem;
-  transition: background-color 0.2s;
-}
-
-.loginButton:hover {
-  background-color: #2563eb;
-}
-
-/* Header Styles */
-.header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0.75rem 1.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.headerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.logoContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.logoText h1 {
-  font-size: 1.125rem;
-  font-weight: bold;
-  margin: 0;
-  color: #0f172a;
-  line-height: 1.2;
-}
-
-.logoText p {
-  font-size: 0.75rem;
-  margin: 0;
-  color: #4b5563;
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-}
-
-.userDetails {
-  text-align: right;
-}
-
-.userName {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #0f172a;
-}
-
-.userRole {
-  font-size: 0.75rem;
-  color: #4b5563;
-}
-
-.userProfileIcon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background-color: #e0f2fe;
-  color: #3b82f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid #bfdbfe;
-  overflow: hidden;
-}
-
-.userProfileIcon:hover {
-  background-color: #bfdbfe;
-}
-
-.userProfileIcon img {
+.dashboardContent {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  color: #1e293b; /* Dark text for contrast */
 }
 
 .userProfileDropdown {
@@ -210,13 +64,6 @@
 }
 
 /* Main Content Styles */
-.mainContent {
-  flex: 1;
-  padding: 2rem 1.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-}
 
 .welcomeCard {
   display: flex;
@@ -548,41 +395,6 @@
 }
 
 /* Footer Styles */
-.footer {
-  background-color: #ffffff;
-  border-top: 1px solid #e5e7eb;
-  padding: 1.5rem;
-  margin-top: auto;
-  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.footerContent {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.footerLogo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.footerLogoImage {
-  margin-right: 0.5rem;
-}
-
-.footerLogoText {
-  font-weight: 500;
-  color: #0f172a;
-}
-
-.footerCopyright {
-  color: #4b5563;
-  font-size: 0.875rem;
-}
 
 /* Responsive Styles */
 @media (min-width: 640px) {

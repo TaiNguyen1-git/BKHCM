@@ -206,11 +206,11 @@ export default function AdminProfilePage() {
               </Link>
             </div>
             <div className={styles.userInfo}>
+              <NotificationBell />
               <div
                 className={styles.userProfileIcon}
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               >
-                <NotificationBell />
                 {user.avatar ? (
                   <Image
                     src={user.avatar}

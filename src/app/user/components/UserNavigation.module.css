@@ -1,0 +1,130 @@
+.navigation {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.5rem 1rem;
+  position: sticky;
+  top: 64px; /* Height of the header */
+  z-index: 40;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  max-height: 80px; /* Adjust based on your navigation height */
+}
+
+.navigation.collapsed {
+  max-height: 40px; /* Height of just the toggle button */
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+}
+
+.toggleButton {
+  position: absolute;
+  right: 1rem;
+  top: 1.15rem;
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navigation.collapsed .toggleButton {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.toggleButton:hover {
+  background-color: #e2e8f0;
+}
+
+.toggleIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #64748b;
+}
+
+.navContainer {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  transition: opacity 0.3s ease;
+}
+
+.collapsed .navContainer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #64748b;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+.navLink.active {
+  color: #3b82f6;
+  background-color: #eff6ff;
+  font-weight: 500;
+}
+
+.navIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.navText {
+  font-size: 0.75rem;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .navigation {
+    padding: 0.5rem 2rem;
+  }
+
+  .navLink {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .navIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .navText {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navContainer {
+    justify-content: center;
+  }
+}

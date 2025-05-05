@@ -1,7 +1,0 @@
-Lưu ý: Bạn cần thêm các ảnh thành viên đội ngũ vào thư mục public/team với tên file:
-- member1.jpg
-- member2.jpg
-- member3.jpg
-- member4.jpg
-
-Hoặc bạn có thể thay đổi đường dẫn ảnh trong file page.tsx để sử dụng ảnh có sẵn.

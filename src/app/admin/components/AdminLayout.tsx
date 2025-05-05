@@ -4,8 +4,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useAuth } from '@/app/context/AuthContext';
 import usePermission from '@/app/hooks/usePermission';
 import PermissionModal from '@/app/components/PermissionModal';
-import Link from 'next/link';
-import Image from 'next/image';
+import AdminHeader from './AdminHeader';
 import { useRouter, usePathname } from 'next/navigation';
 
 interface AdminLayoutProps {
@@ -79,9 +78,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, requiredPermission 
   }
 
   return (
-    <>
-      {children}
-    </>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <AdminHeader />
+      <div style={{ flex: 1 }}>
+        {children}
+      </div>
+    </div>
   );
 };
 

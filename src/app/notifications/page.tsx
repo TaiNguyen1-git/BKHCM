@@ -124,14 +124,24 @@ export default function NotificationsPage() {
             </Link>
           </div>
           <div className={styles.userInfo}>
+            <NotificationBell />
             <div
               className={styles.userProfileIcon}
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
             >
-              <NotificationBell />
-              <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconMedium} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              {user.avatar ? (
+                <Image
+                  src={user.avatar}
+                  alt={user.name}
+                  width={32}
+                  height={32}
+                  className={styles.userAvatar}
+                />
+              ) : (
+                <div className={styles.userAvatarPlaceholder}>
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+              )}
               <span className={styles.userName}>{user.name}</span>
               <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

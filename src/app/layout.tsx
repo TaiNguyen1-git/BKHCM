@@ -9,6 +9,9 @@ import { DeviceProvider } from "./context/DeviceContext";
 import { ReportProvider } from "./context/ReportContext";
 import { FeedbackProvider } from "./context/FeedbackContext";
 import { NotificationProvider } from "./context/NotificationContext";
+import { SettingsProvider } from "./context/SettingsContext";
+import ThemeSettingsSync from "./components/ThemeSettingsSync";
+import LanguageSettingsSync from "./components/LanguageSettingsSync";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -44,7 +47,11 @@ export default function RootLayout({
                     <ReportProvider>
                       <FeedbackProvider>
                         <NotificationProvider>
-                          {children}
+                          <SettingsProvider>
+                            <ThemeSettingsSync />
+                            <LanguageSettingsSync />
+                            {children}
+                          </SettingsProvider>
                         </NotificationProvider>
                       </FeedbackProvider>
                     </ReportProvider>

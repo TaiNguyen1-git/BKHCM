@@ -5,6 +5,7 @@ import { useAuth } from '@/app/context/AuthContext';
 import { useBookings, Booking } from '@/app/context/BookingContext';
 import { useRooms } from '@/app/context/RoomContext';
 import { useUsers } from '@/app/context/UserContext';
+import AdminLayout from '@/app/admin/components/AdminLayout';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './bookings.module.css';
@@ -112,310 +113,224 @@ export default function BookingManagement() {
   }
 
   return (
-    <div className={styles.bookingManagementContainer}>
-      {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <div className={styles.logoContainer}>
-            <Link href="/admin" className={styles.logoLink}>
+    <>
+      <AdminLayout requiredPermission="admin.bookings">
+        <div className={styles.bookingManagementContainer}>
+
+        {/* Main content */}
+        <main className={styles.mainContent}>
+          <div className={styles.pageHeader}>
+            <div className={styles.breadcrumbs}>
+              <Link href="/admin" className={styles.breadcrumbLink}>
+                Trang chủ Admin
+              </Link>
+              <span className={styles.breadcrumbSeparator}>/</span>
+              <span className={styles.breadcrumbCurrent}>Quản lý đặt phòng</span>
+            </div>
+            <h1 className={styles.pageTitle}>Quản lý đặt phòng</h1>
+          </div>
+
+          <div className={styles.bookingManagementControls}>
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Tìm kiếm đặt phòng..."
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" className={styles.searchIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className={styles.filterControls}>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Trạng thái</label>
+              <select
+                className={styles.filterSelect}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="">Tất cả</option>
+                <option value="pending">Đang chờ duyệt</option>
+                <option value="approved">Đã duyệt</option>
+                <option value="rejected">Từ chối</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+            </div>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Ngày</label>
+              <input
+                type="date"
+                className={styles.datePicker}
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+              />
+            </div>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Phòng</label>
+              <select
+                className={styles.filterSelect}
+                value={roomFilter}
+                onChange={(e) => setRoomFilter(e.target.value)}
+              >
+                <option value="">Tất cả</option>
+                {rooms.map(room => (
+                  <option key={room.id} value={room.id}>{room.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Người dùng</label>
+              <select
+                className={styles.filterSelect}
+                value={userFilter}
+                onChange={(e) => setUserFilter(e.target.value)}
+              >
+                <option value="">Tất cả</option>
+                {users.filter(u => u.role !== 'Quản trị viên').map(user => (
+                  <option key={user.id} value={user.id}>{user.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className={styles.bookingTable}>
+            <div className={styles.tableHeader}>
+              <div className={styles.tableHeaderCell} style={{ width: '5%' }}>STT</div>
+              <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Phòng</div>
+              <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Người đặt</div>
+              <div className={styles.tableHeaderCell} style={{ width: '10%' }}>Ngày</div>
+              <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Khung giờ</div>
+              <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Mục đích</div>
+              <div className={styles.tableHeaderCell} style={{ width: '10%' }}>Trạng thái</div>
+              <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Thao tác</div>
+            </div>
+
+            <div className={styles.tableBody}>
+              {filteredBookings.length === 0 ? (
+                <div className={styles.noResults}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className={styles.noResultsIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p>Không tìm thấy đặt phòng nào</p>
+                </div>
+              ) : (
+                filteredBookings.map((booking, index) => (
+                  <div key={booking.id} className={styles.tableRow}>
+                    <div className={styles.tableCell} style={{ width: '5%' }}>{index + 1}</div>
+                    <div className={styles.tableCell} style={{ width: '15%' }}>{getRoomNameById(booking.roomId)}</div>
+                    <div className={styles.tableCell} style={{ width: '15%' }}>{getUserNameById(booking.userId)}</div>
+                    <div className={styles.tableCell} style={{ width: '10%' }}>{booking.date}</div>
+                    <div className={styles.tableCell} style={{ width: '15%' }}>{booking.timeSlot}</div>
+                    <div className={styles.tableCell} style={{ width: '15%' }}>
+                      {booking.purpose.length > 30 ? `${booking.purpose.substring(0, 30)}...` : booking.purpose}
+                    </div>
+                    <div className={styles.tableCell} style={{ width: '10%' }}>
+                      <span className={`${styles.statusTag} ${
+                        booking.status === 'pending' ? styles.statusPending :
+                        booking.status === 'approved' ? styles.statusApproved :
+                        booking.status === 'rejected' ? styles.statusRejected :
+                        styles.statusCancelled
+                      }`}>
+                        {booking.status === 'pending' ? 'Chờ duyệt' :
+                         booking.status === 'approved' ? 'Đã duyệt' :
+                         booking.status === 'rejected' ? 'Từ chối' : 'Đã hủy'}
+                      </span>
+                    </div>
+                    <div className={styles.tableCell} style={{ width: '15%' }}>
+                      <div className={styles.actionButtons}>
+                        <button
+                          className={styles.viewButton}
+                          onClick={() => {
+                            setCurrentBooking(booking);
+                            setShowDetailsModal(true);
+                          }}
+                          title="Xem chi tiết"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                        </button>
+
+                        {booking.status === 'pending' && (
+                          <>
+                            <button
+                              className={styles.approveButton}
+                              onClick={() => {
+                                setCurrentBooking(booking);
+                                setNotes('');
+                                setShowApproveModal(true);
+                              }}
+                              title="Phê duyệt"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </button>
+                            <button
+                              className={styles.rejectButton}
+                              onClick={() => {
+                                setCurrentBooking(booking);
+                                setNotes('');
+                                setShowRejectModal(true);
+                              }}
+                              title="Từ chối"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </>
+                        )}
+
+                        {booking.status === 'approved' && (
+                          <button
+                            className={styles.cancelButton}
+                            onClick={() => {
+                              if (window.confirm('Bạn có chắc chắn muốn hủy đặt phòng này không?')) {
+                                cancelBooking(booking.id, 'Quản trị viên hủy đặt phòng');
+                              }
+                            }}
+                            title="Hủy đặt phòng"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className={styles.footer}>
+          <div className={styles.footerContent}>
+            <div className={styles.footerLogo}>
               <Image
                 src="/hcmut.png"
                 alt="HCMUT Logo"
-                width={45}
-                height={45}
+                width={30}
+                height={30}
+                className={styles.footerLogoImage}
               />
-              <div className={styles.logoText}>
-                <h1>Trường Đại học Bách khoa - ĐHQG TPHCM</h1>
-                <p>Smart Study Space Management and Reservation System for HCMUT</p>
-              </div>
-            </Link>
-          </div>
-          <div className={styles.userInfo}>
-            <div
-              className={styles.userProfileIcon}
-              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconMedium} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className={styles.userName}>{user.name}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <span className={styles.footerLogoText}>SSMR - Trường Đại học Bách khoa - ĐHQG TPHCM</span>
             </div>
-
-            {showProfileDropdown && (
-              <div className={styles.profileDropdown}>
-                <div className={styles.profileInfo}>
-                  <div className={styles.profileAvatar}>
-                    {user.avatar ? (
-                      <Image
-                        src={user.avatar}
-                        alt="Avatar"
-                        width={50}
-                        height={50}
-                        className={styles.avatarImage}
-                      />
-                    ) : (
-                      <div className={styles.avatarPlaceholder}>
-                        {user.name.charAt(0)}
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.profileDetails}>
-                    <p className={styles.profileName}>{user.name}</p>
-                    <p className={styles.profileRole}>{user.role}</p>
-                    <p className={styles.profileEmail}>{user.email}</p>
-                  </div>
-                </div>
-                <div className={styles.profileLinks}>
-                  <Link href="/admin" className={styles.profileLink}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Trang chủ Admin
-                  </Link>
-                  <Link href="/profile" className={styles.profileLink}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    Thông tin cá nhân
-                  </Link>
-                  <Link href="/settings" className={styles.profileLink}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Cài đặt
-                  </Link>
-                  <button
-                    className={styles.logoutButton}
-                    onClick={() => logout()}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    Đăng xuất
-                  </button>
-                </div>
-              </div>
-            )}
+            <div className={styles.footerCopyright}>
+              © 2025 - All rights reserved
+            </div>
           </div>
+        </footer>
         </div>
-      </header>
-
-      {/* Main content */}
-      <main className={styles.mainContent}>
-        <div className={styles.pageHeader}>
-          <div className={styles.breadcrumbs}>
-            <Link href="/admin" className={styles.breadcrumbLink}>
-              Trang chủ Admin
-            </Link>
-            <span className={styles.breadcrumbSeparator}>/</span>
-            <span className={styles.breadcrumbCurrent}>Quản lý đặt phòng</span>
-          </div>
-          <h1 className={styles.pageTitle}>Quản lý đặt phòng</h1>
-        </div>
-
-        <div className={styles.bookingManagementControls}>
-          <div className={styles.searchContainer}>
-            <input
-              type="text"
-              placeholder="Tìm kiếm đặt phòng..."
-              className={styles.searchInput}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" className={styles.searchIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-        </div>
-
-        <div className={styles.filterControls}>
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Trạng thái</label>
-            <select
-              className={styles.filterSelect}
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="">Tất cả</option>
-              <option value="pending">Đang chờ duyệt</option>
-              <option value="approved">Đã duyệt</option>
-              <option value="rejected">Từ chối</option>
-              <option value="cancelled">Đã hủy</option>
-            </select>
-          </div>
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Ngày</label>
-            <input
-              type="date"
-              className={styles.datePicker}
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-            />
-          </div>
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Phòng</label>
-            <select
-              className={styles.filterSelect}
-              value={roomFilter}
-              onChange={(e) => setRoomFilter(e.target.value)}
-            >
-              <option value="">Tất cả</option>
-              {rooms.map(room => (
-                <option key={room.id} value={room.id}>{room.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Người dùng</label>
-            <select
-              className={styles.filterSelect}
-              value={userFilter}
-              onChange={(e) => setUserFilter(e.target.value)}
-            >
-              <option value="">Tất cả</option>
-              {users.filter(u => u.role !== 'Quản trị viên').map(user => (
-                <option key={user.id} value={user.id}>{user.name}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className={styles.bookingTable}>
-          <div className={styles.tableHeader}>
-            <div className={styles.tableHeaderCell} style={{ width: '5%' }}>STT</div>
-            <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Phòng</div>
-            <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Người đặt</div>
-            <div className={styles.tableHeaderCell} style={{ width: '10%' }}>Ngày</div>
-            <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Khung giờ</div>
-            <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Mục đích</div>
-            <div className={styles.tableHeaderCell} style={{ width: '10%' }}>Trạng thái</div>
-            <div className={styles.tableHeaderCell} style={{ width: '15%' }}>Thao tác</div>
-          </div>
-
-          <div className={styles.tableBody}>
-            {filteredBookings.length === 0 ? (
-              <div className={styles.noResults}>
-                <svg xmlns="http://www.w3.org/2000/svg" className={styles.noResultsIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p>Không tìm thấy đặt phòng nào</p>
-              </div>
-            ) : (
-              filteredBookings.map((booking, index) => (
-                <div key={booking.id} className={styles.tableRow}>
-                  <div className={styles.tableCell} style={{ width: '5%' }}>{index + 1}</div>
-                  <div className={styles.tableCell} style={{ width: '15%' }}>{getRoomNameById(booking.roomId)}</div>
-                  <div className={styles.tableCell} style={{ width: '15%' }}>{getUserNameById(booking.userId)}</div>
-                  <div className={styles.tableCell} style={{ width: '10%' }}>{booking.date}</div>
-                  <div className={styles.tableCell} style={{ width: '15%' }}>{booking.timeSlot}</div>
-                  <div className={styles.tableCell} style={{ width: '15%' }}>
-                    {booking.purpose.length > 30 ? `${booking.purpose.substring(0, 30)}...` : booking.purpose}
-                  </div>
-                  <div className={styles.tableCell} style={{ width: '10%' }}>
-                    <span className={`${styles.statusTag} ${
-                      booking.status === 'pending' ? styles.statusPending :
-                      booking.status === 'approved' ? styles.statusApproved :
-                      booking.status === 'rejected' ? styles.statusRejected :
-                      styles.statusCancelled
-                    }`}>
-                      {booking.status === 'pending' ? 'Chờ duyệt' :
-                       booking.status === 'approved' ? 'Đã duyệt' :
-                       booking.status === 'rejected' ? 'Từ chối' : 'Đã hủy'}
-                    </span>
-                  </div>
-                  <div className={styles.tableCell} style={{ width: '15%' }}>
-                    <div className={styles.actionButtons}>
-                      <button
-                        className={styles.viewButton}
-                        onClick={() => {
-                          setCurrentBooking(booking);
-                          setShowDetailsModal(true);
-                        }}
-                        title="Xem chi tiết"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                      </button>
-
-                      {booking.status === 'pending' && (
-                        <>
-                          <button
-                            className={styles.approveButton}
-                            onClick={() => {
-                              setCurrentBooking(booking);
-                              setNotes('');
-                              setShowApproveModal(true);
-                            }}
-                            title="Phê duyệt"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </button>
-                          <button
-                            className={styles.rejectButton}
-                            onClick={() => {
-                              setCurrentBooking(booking);
-                              setNotes('');
-                              setShowRejectModal(true);
-                            }}
-                            title="Từ chối"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </button>
-                        </>
-                      )}
-
-                      {booking.status === 'approved' && (
-                        <button
-                          className={styles.cancelButton}
-                          onClick={() => {
-                            if (window.confirm('Bạn có chắc chắn muốn hủy đặt phòng này không?')) {
-                              cancelBooking(booking.id, 'Quản trị viên hủy đặt phòng');
-                            }
-                          }}
-                          title="Hủy đặt phòng"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconSmall} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                          </svg>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerLogo}>
-            <Image
-              src="/hcmut.png"
-              alt="HCMUT Logo"
-              width={30}
-              height={30}
-              className={styles.footerLogoImage}
-            />
-            <span className={styles.footerLogoText}>SSMR - Trường Đại học Bách khoa - ĐHQG TPHCM</span>
-          </div>
-          <div className={styles.footerCopyright}>
-            © 2025 - All rights reserved
-          </div>
-        </div>
-      </footer>
+      </AdminLayout>
 
       {/* Modal xem chi tiết đặt phòng */}
       {showDetailsModal && currentBooking && (
@@ -657,6 +572,6 @@ export default function BookingManagement() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

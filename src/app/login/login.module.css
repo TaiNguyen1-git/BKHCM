@@ -201,16 +201,17 @@
   color: #4b5563;
 }
 
-.registerLink a {
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
   color: #3b82f6;
-  text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease;
 }
 
-.registerLink a:hover {
+.homeLink:hover {
   color: #1e40af;
-  text-decoration: underline;
 }
 
 .errorMessage {

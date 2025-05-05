@@ -473,16 +473,7 @@ a svg {
   transform: translateY(-2px) !important;
 }
 
-.menu-auth-button.register {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
 
-.menu-auth-button.register:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px) !important;
-}
 
 .menu-divider {
   height: 1px;
@@ -518,16 +509,7 @@ a svg {
   transform: translateY(-2px);
 }
 
-.menu-auth-button.register {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
 
-.menu-auth-button.register:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-}
 
 .hero-title {
   color: white;

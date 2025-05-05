@@ -18,7 +18,8 @@ const rolePermissions = {
   'Ban quản lý': [
     'admin.dashboard',
     'admin.reports',
-    'admin.feedback'
+    'admin.feedback',
+    'admin.settings'
   ]
 };
 
