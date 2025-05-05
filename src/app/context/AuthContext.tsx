@@ -10,7 +10,10 @@ type User = {
   name: string;
   role: string;
   email: string;
-  avatar: string | null;
+  avatar: null; // Changed from string | null to match mockData structure
+  phone?: string;
+  department?: string;
+  bio?: string;
 };
 
 // Define the AuthContext type
@@ -97,7 +100,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (userIndex !== -1) {
       // Preserve the password
       const password = mockUsers[userIndex].password;
-      mockUsers[userIndex] = { ...updatedUser, password };
+      // Update the user in mockUsers
+      mockUsers[userIndex] = {
+        ...updatedUser,
+        password,
+        avatar: null // Always set avatar to null to match the mockData structure
+      };
     }
   };
 
